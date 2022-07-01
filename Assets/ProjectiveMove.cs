@@ -15,6 +15,17 @@ public class ProjectiveMove : MonoBehaviour
         {
             var muzzleVFX = Instantiate(muzzlePrefab, transform.position, Quaternion.identity);
             muzzleVFX.transform.forward = gameObject.transform.forward;
+            var psMuzzle = muzzleVFX.GetComponent<ParticleSystem>();
+
+            if (psMuzzle != null)
+            {
+                Destroy(muzzleVFX, psMuzzle.main.duration);
+            }
+            else
+            {
+                var psChild = muzzleVFX.transform.GetChild(0).GetComponent<ParticleSystem>();
+                Destroy(muzzleVFX, psChild.main.duration);
+            }
         }
     }
 
@@ -33,6 +44,17 @@ public class ProjectiveMove : MonoBehaviour
         if (hitPrefab != null)
         {
             var hitVFX = Instantiate(hitPrefab, pos, rot);
+            var psMuzzle = hitVFX.GetComponent<ParticleSystem>();
+
+            if (psMuzzle != null)
+            {
+                Destroy(hitVFX, psMuzzle.main.duration);
+            }
+            else
+            {
+                var psChild = hitVFX.transform.GetChild(0).GetComponent<ParticleSystem>();
+                Destroy(hitVFX, psChild.main.duration);
+            }
         }
 
         Destroy(gameObject);
